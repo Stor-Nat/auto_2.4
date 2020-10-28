@@ -1,8 +1,10 @@
 package ru.netology.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
+import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class TransferPage {
@@ -18,10 +20,8 @@ public class TransferPage {
         sendButton.click();
     }
 
-    public void transferCancel(DataHelper.Card card, int amount) {
-        sumField.setValue(String.valueOf(amount));
-        fromField.setValue(card.getNumber());
-        cancelButton.click();
+    public SelenideElement errorMessage() {
+        return $(withText("У вас недостаточно средств на карте")).shouldBe(Condition.visible);
     }
 
 }

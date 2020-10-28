@@ -40,10 +40,10 @@ public class MoneyTransferTest {
         val cardInfo = DataHelper.Card.getCardInfo01();
         val transferMoney = dashboard.cardRefillButtonClick02();
         transferMoney.transfer(cardInfo, amount);
-        val cardBalanceAfterSendFirst = DashboardPage.cardBalanceAfterSendMoney(cardBalance01, amount);
-        val cardBalanceAfterSendSecond = DashboardPage.cardBalanceAfterGetMoney(cardBalance02, amount);
-        assertEquals(cardBalanceAfterSendFirst, dashboard.getCardBalance01());
-        assertEquals(cardBalanceAfterSendSecond, dashboard.getCardBalance02());
+        val cardBalanceAfterSend01 = DashboardPage.cardBalanceAfterSendMoney(cardBalance01, amount);
+        val cardBalanceAfterSend02 = DashboardPage.cardBalanceAfterGetMoney(cardBalance02, amount);
+        assertEquals(cardBalanceAfterSend01, dashboard.getCardBalance01());
+        assertEquals(cardBalanceAfterSend02, dashboard.getCardBalance02());
     }
 
     @Test
@@ -59,10 +59,24 @@ public class MoneyTransferTest {
         val cardInfo = DataHelper.Card.getCardInfo02();
         val transferMoney = dashboard.cardRefillButtonClick01();
         transferMoney.transfer(cardInfo, amount);
-        val cardBalanceAfterSendFirst = DashboardPage.cardBalanceAfterSendMoney(cardBalance01, amount);
-        val cardBalanceAfterSendSecond = DashboardPage.cardBalanceAfterGetMoney(cardBalance02, amount);
-        assertEquals(cardBalanceAfterSendFirst, dashboard.getCardBalance01());
-        assertEquals(cardBalanceAfterSendSecond, dashboard.getCardBalance02());
+        val cardBalanceAfterSend02 = DashboardPage.cardBalanceAfterSendMoney(cardBalance02, amount);
+        val cardBalanceAfterSend01 = DashboardPage.cardBalanceAfterGetMoney(cardBalance01, amount);
+        assertEquals(cardBalanceAfterSend01, dashboard.getCardBalance01());
+        assertEquals(cardBalanceAfterSend02, dashboard.getCardBalance02());
+    }
+
+    @Test
+    void shouldReturnErrorIfSendMoreBalance() {
+        int amount = 20000;
+        val loginPage = new LoginPage();
+        val authInfo = DataHelper.getAuthInfo();
+        val verificationPage = loginPage.validLogin(authInfo);
+        val verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        val dashboard = verificationPage.validVerify(verificationCode);
+        val cardInfo = DataHelper.Card.getCardInfo02();
+        val transferMoney = dashboard.cardRefillButtonClick01();
+        transferMoney.transfer(cardInfo, amount);
+        transferMoney.errorMessage();
     }
 
 }
