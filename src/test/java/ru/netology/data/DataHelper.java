@@ -1,8 +1,6 @@
 package ru.netology.data;
 
 import lombok.Value;
-import lombok.val;
-import ru.netology.page.DashboardPage;
 
 public class DataHelper {
     private DataHelper() {
@@ -18,9 +16,9 @@ public class DataHelper {
         return new AuthInfo("vasya", "qwerty123");
     }
 
-//    public static AuthInfo getOtherAuthInfo(AuthInfo original) {
-//        return new AuthInfo("petya", "123qwerty");
-//    }
+    public static AuthInfo getOtherAuthInfo(AuthInfo original) {
+        return new AuthInfo("petya", "123qwerty");
+    }
 
     @Value
     public static class VerificationCode {
@@ -34,27 +32,13 @@ public class DataHelper {
     @Value
     public static class Card {
         private String number;
-        private int balance;
 
-        public static Card getCardInfo01(AuthInfo authInfo) {
-            val dashboard = new DashboardPage();
-            return new Card("5559 0000 0000 0001", 10000);
-//            return new Card("5559 0000 0000 0001", dashboard.getCardBalance("01"));
+        public static Card getCardInfo01() {
+            return new Card("5559 0000 0000 0001");
         }
 
-        public static Card getCardInfo02(AuthInfo authInfo) {
-            val dashboard = new DashboardPage();
-            return new Card("5559 0000 0000 0002", 10000);
-        }
-
-        public static int cardBalanceAfterSendMoney(int balance, int amount) {
-            int total = balance - amount;
-            return total;
-        }
-
-        public static int cardBalanceAfterGetMoney(int balance, int amount) {
-            int total = balance + amount;
-            return total;
+        public static Card getCardInfo02() {
+            return new Card("5559 0000 0000 0002");
         }
     }
 }
